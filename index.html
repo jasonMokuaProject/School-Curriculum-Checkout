@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- external CSS  -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+    <title>Vue App</title>
+  </head>
+  <body>
+    <div id="thesubjectlessons">
+   
+
+
+    <form v-show="themainlessonshow"> 
+      <h5> Sort by </h1>
+          <input type="radio" id="price" name="f_" value="1" checked >
+          <label for="price">price</label><br>
+
+          <input type="radio" id="location" name="f_" value="2"  >
+          <label for="location">location</label><br>
+
+          <input type="radio" id="subject" name="f_" value="3" >
+          <label for="subject">subject</label><br>
+
+          <input type="radio" id="Availability" name="f_" value="4" >
+          <label for="Availability">Availability</label><br><br>
+
+
+          <input type="radio" id="Ascending" name="o_" value="4" >
+          <label for="Availability">Ascending</label><br>
+          
+         <input type="radio" id="descending" name="o_" value="5" checked >
+          <label for="Availability"> Descending</label><br>
+
+        
+      </form> 
+      <br>
+      <div class="subject"   v-for = "(lesson,index) in sortPrice" v-show="themainlessonshow" >
+        <!-- Accessing data stored in Vue object -->
+        <p>Subject: {{ lesson.subject  }} </p>
+        <p>Location: {{ lesson.location }}</p>
+        <p>Price: £{{ lesson.price }}</p>
+        <p>Spaces: {{ lesson.spaces }}</p>
+
+        <!-- Adding image  -->
+        <img class="img" v-bind:src="lesson.path"  v-bind:alt="lesson.text" style="height: 100px">
+        <!-- decrease space -->
+        <button id="addtoCartBtnnow" v-on:click="takewayspace(index)" :disabled='lesson.booked'>
+          Add to cart
+        </button>
+      </div>
+
+
+      <br> 
+      <button id="addtoCartshoppingg" :disabled='thetoggledisable' v-on:click="Shoppingcart()">
+       Shopping Cart
+      </button>
+      <br> <br>
+      <div class="shoppingcarwrapper" v-if="shoppingbutton">
+          <h1> Shopping Cart </h1>
+
+          <div class="subject"   v-for = "(lesson,index) in Lessons"  v-if="lesson.selected">
+            <!-- Accessing data stored in Vue object -->
+            <p>Subject: {{ lesson.subject  }} </p>
+            <p>Location: {{ lesson.location }}</p>
+            <p>Price: £{{ lesson.price }}</p>
+            <p>Spaces: {{ lesson.spaces }}</p>
+
+            <img class="img" v-bind:src="lesson.path"  v-bind:alt="lesson.text" style="height: 100px">
+      
+            <button id="addtoCartBtnnow" v-on:click="removelesson(index)">
+            Remove 
+            </button>
+          </div>
+
+          <br>
+          <h1> Checkout </h1>
+              <form name="theform">
+          Name: <input type="text" name="ofusername"  v-on:keydown="checkspace()" v-on:keyup="nameofuser()">  Phone:  <input type="text" v-on:keydown="checkspace()" name="phone" v-on:keyup="phonenumber()">
+          <button :disabled='Disabledcheckoutbutton'  v-on:click="actioncompleted()"> Check Out </button>
+
+        </form>
+        <br>
+    </div>
+
+
+
+
+    </div>
+
+   
+    <script src="lessons.js"></script>
+  </body>
+</html>
